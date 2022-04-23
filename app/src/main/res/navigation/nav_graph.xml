@@ -9,5 +9,14 @@
         android:id="@+id/textFragment"
         android:name="io.github.npeeech.saft.TextFragment"
         android:label="fragment_text"
-        tools:layout="@layout/fragment_text" />
+        tools:layout="@layout/fragment_text" >
+        <action
+            android:id="@+id/action_textFragment_to_choiceFragment"
+            app:destination="@id/choiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choiceFragment"
+        android:name="io.github.npeeech.saft.ChoiceFragment"
+        android:label="ChoiceFragment"
+        tools:layout="@layout/fragment_choice"/>
 </navigation>

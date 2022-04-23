@@ -44,7 +44,8 @@
                 android:id="@+id/alarm_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/alarm_item"/>
 
             <!--            <TextView-->
             <!--                android:layout_width="match_parent"-->

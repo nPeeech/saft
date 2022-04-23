@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="inputPlainTextHint">時刻の含まれるプレーンテキストを入力してください。</string>
     <string name="parseButtonText">時刻を抽出する</string>
+    <string name="setButtonText">アラームをセットする</string>
 </resources>
