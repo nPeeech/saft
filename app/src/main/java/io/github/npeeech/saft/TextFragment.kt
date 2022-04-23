@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import io.github.npeeech.saft.databinding.FragmentTextBinding
+
 class TextFragment : Fragment() {
+    private lateinit var binding: FragmentTextBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +20,14 @@ class TextFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_text, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_text,
+            container,
+            false
+        )
+        return binding.root
     }
+
 
 }
