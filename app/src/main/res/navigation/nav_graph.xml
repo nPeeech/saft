@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_text" >
         <action
             android:id="@+id/action_textFragment_to_choiceFragment"
-            app:destination="@id/choiceFragment" />
+            app:destination="@id/choiceFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/choiceFragment"

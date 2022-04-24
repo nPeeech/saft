@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import io.github.npeeech.saft.databinding.FragmentTextBinding
 
 class TextFragment : Fragment() {
@@ -44,6 +46,14 @@ class TextFragment : Fragment() {
         binding.parseButton.setOnClickListener { _ ->
             Toast.makeText(activity, viewModel.plainText.value, Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.eventParse.observe(viewLifecycleOwner, Observer { parse ->
+            if (parse){
+                // TODO viewModel.parse()のようなものを呼ぶ
+                findNavController().navigate(TextFragmentDirections.actionTextFragmentToChoiceFragment())
+                viewModel.onParseComplete()
+            }
+        })
 
         return binding.root
     }
