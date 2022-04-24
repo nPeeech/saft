@@ -17,10 +17,7 @@ class SharedViewModel(receiveText: String) : ViewModel() {
     }
 
     fun onParse(){
-        // ここにif文書くの行儀悪い?
-        if (!plainText.value.isNullOrBlank()) {
-            _eventParse.value = true
-        }
+        _eventParse.value = true
     }
 
     fun onParseComplete(){

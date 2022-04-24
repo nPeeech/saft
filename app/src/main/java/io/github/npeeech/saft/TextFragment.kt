@@ -38,7 +38,7 @@ class TextFragment : Fragment() {
         val receiveText = activity?.intent?.getStringExtra(Intent.EXTRA_TEXT) ?:""
 
         viewModelFactory = SharedViewModelFactory(receiveText)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SharedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(SharedViewModel::class.java)
         binding.sharedViewModel = viewModel
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -49,9 +49,13 @@ class TextFragment : Fragment() {
 
         viewModel.eventParse.observe(viewLifecycleOwner, Observer { parse ->
             if (parse){
-                // TODO viewModel.parse()のようなものを呼ぶ
-                findNavController().navigate(TextFragmentDirections.actionTextFragmentToChoiceFragment())
-                viewModel.onParseComplete()
+                if(binding.inputPlainText.text.isNullOrBlank()){
+                    Toast.makeText(activity, R.string.empty_input_text_message, Toast.LENGTH_SHORT).show()
+                }else {
+                    // TODO viewModel.parse()のようなものを呼ぶ
+                    findNavController().navigate(TextFragmentDirections.actionTextFragmentToChoiceFragment())
+                    viewModel.onParseComplete()
+                }
             }
         })
 

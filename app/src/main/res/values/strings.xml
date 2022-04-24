@@ -5,4 +5,5 @@
     <string name="inputPlainTextHint">時刻の含まれるプレーンテキストを入力してください。</string>
     <string name="parseButtonText">時刻を抽出する</string>
     <string name="setButtonText">アラームをセットする</string>
+    <string name="empty_input_text_message">テキストを入力してください</string>
 </resources>
