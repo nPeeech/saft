@@ -1,5 +1,6 @@
 package io.github.npeeech.saft
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,10 @@ class TextFragment : Fragment() {
             false
         )
 
-        viewModelFactory = SharedViewModelFactory("すとりんぐだよ")
+        // 外部からテキストを受け取る
+        val receiveText = activity?.intent?.getStringExtra(Intent.EXTRA_TEXT) ?:""
+
+        viewModelFactory = SharedViewModelFactory(receiveText)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SharedViewModel::class.java)
         binding.sharedViewModel = viewModel
 
