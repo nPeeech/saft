@@ -52,7 +52,7 @@ class TextFragment : Fragment() {
                 if(binding.inputPlainText.text.isNullOrBlank()){
                     Toast.makeText(activity, R.string.empty_input_text_message, Toast.LENGTH_SHORT).show()
                 }else {
-                    // TODO viewModel.parse()のようなものを呼ぶ
+                    viewModel.parse()
                     findNavController().navigate(TextFragmentDirections.actionTextFragmentToChoiceFragment())
                     viewModel.onParseComplete()
                 }

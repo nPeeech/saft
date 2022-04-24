@@ -3,6 +3,7 @@ package io.github.npeeech.saft
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.time.LocalTime
 
 class SharedViewModel(receiveText: String) : ViewModel() {
     val plainText = MutableLiveData<String>()
@@ -10,6 +11,8 @@ class SharedViewModel(receiveText: String) : ViewModel() {
     private val _eventParse = MutableLiveData<Boolean>()
     val eventParse: LiveData<Boolean>
         get() = _eventParse
+
+    var alarmList: List<LocalTime> = listOf()
 
 
     init {
@@ -23,5 +26,12 @@ class SharedViewModel(receiveText: String) : ViewModel() {
     fun onParseComplete(){
         _eventParse.value = false
     }
-    //TODO 引数で文字列を受け取るようにしたけど，ChoiceFragmentで困らない？
+
+    fun parse(){
+        val regex = Regex("""[0-2]?[0-9][:時][0-6][0-9][分]?""")
+
+        alarmList = regex.findAll(plainText.value ?: "").map {
+            LocalTime.parse(it.value)
+        }.toSet().toList().sorted()
+    }
 }
