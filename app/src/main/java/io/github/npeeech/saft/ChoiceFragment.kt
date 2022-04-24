@@ -28,6 +28,8 @@ class ChoiceFragment : Fragment() {
             container,
             false
         )
+        binding.sharedViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
