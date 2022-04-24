@@ -31,6 +31,9 @@ class ChoiceFragment : Fragment() {
         binding.sharedViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        val adapter = AlarmListAdapter(viewModel.alarmList)
+        binding.alarmList.adapter = adapter
+
         return binding.root
     }
 
