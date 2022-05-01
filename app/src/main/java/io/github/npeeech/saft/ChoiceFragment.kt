@@ -13,8 +13,6 @@ import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import io.github.npeeech.saft.databinding.FragmentChoiceBinding
-import java.time.LocalTime
-import java.util.*
 
 class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +39,8 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val alarmOffsetDefaultValue = resources.getInteger(R.integer.alarmOffsetDefaultValue)
-        viewModel.alarmOffsetTimeList = resources.getIntArray(R.array.offset_time_integer_array).toList()
-        viewModel.alarmOffsetTime.value =
-            viewModel.alarmOffsetTimeList[sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)?: alarmOffsetDefaultValue]
+        viewModel.deltaTimeList = resources.getIntArray(R.array.offset_time_integer_array).toList()
+        viewModel.deltaTimePosition.value = sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)
 
 
         val adapter = AlarmListAdapter(listOf())
@@ -59,21 +56,15 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
-            viewModel.alarmOffsetTime.value?.let { spinner.setSelection(it) }
-            spinner.setSelection(sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)?: alarmOffsetDefaultValue)
+            viewModel.deltaTimePosition.value?.let { spinner.setSelection(it) }
             spinner.onItemSelectedListener = this
         }
 
-//        viewModel.offsetAlarmList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//            alarmList ->
-//            adapter.setList(alarmList)
-//            Log.i("observe", "viewModel.offsetAlarmListが変更された")
-//        })
-
-        viewModel.alarmOffsetTime.observe(viewLifecycleOwner, androidx.lifecycle.Observer { offsetTime ->
+        viewModel.deltaTimePosition.observe(viewLifecycleOwner, androidx.lifecycle.Observer { position ->
             viewModel.alarmList.value?.let {
                 adapter.setList(it.map { time ->
-                    time.plusMinutes(offsetTime.toLong())
+                    val deltaTime = viewModel.deltaTimeList[position]
+                    time.plusMinutes(deltaTime.toLong())
                 })
             }
             Log.i("observe", "viewModel.alarmOffsetTimeが変更された")
@@ -84,7 +75,7 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        viewModel.alarmOffsetTime.value = viewModel.alarmOffsetTimeList[position]
+        viewModel.deltaTimePosition.value = position
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()){
             putInt(getString(R.string.alarmOffsetKey), position)
