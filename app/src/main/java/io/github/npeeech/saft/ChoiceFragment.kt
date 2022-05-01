@@ -41,14 +41,14 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val alarmOffsetValue =
             sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)
 
-        val adapter = AlarmListAdapter(viewModel.alarmList)
+        val adapter = viewModel.alarmList.value?.let { AlarmListAdapter(it) }
         binding.alarmList.adapter = adapter
 
         val spinner: Spinner = binding.alarmOffsetSpinner
 
         ArrayAdapter.createFromResource(
             requireContext(),
-            R.array.offset_time_array,
+            R.array.offset_time_string_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

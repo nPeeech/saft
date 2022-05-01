@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="offset_time_array">
+    <string-array name="offset_time_string_array">
         <item>5分前</item>
         <item>3分前</item>
         <item>2分前</item>
@@ -11,4 +11,15 @@
         <item>3分後</item>
         <item>5分後</item>
     </string-array>
+    <integer-array name="offset_time_integer_array">
+        <item>-5</item>
+        <item>-3</item>
+        <item>-2</item>
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+    </integer-array>
 </resources>
