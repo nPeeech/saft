@@ -1,7 +1,9 @@
 package io.github.npeeech.saft
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +12,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import io.github.npeeech.saft.databinding.FragmentChoiceBinding
+import java.time.LocalTime
 
 class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,21 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.deltaTimePosition.value = sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)
 
 
-        val adapter = AlarmListAdapter(listOf())
+        val adapter = AlarmListAdapter(object : ClickButtonListener{
+            override fun onClick(position: Int) {
+                val hour = viewModel.calcAlarm(position).hour.toInt()
+                val minutes = viewModel.calcAlarm(position).minute.toInt()
+                val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+                    putExtra(AlarmClock.EXTRA_HOUR, hour)
+                    putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+                    putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+                }
+                if (intent.resolveActivity(requireActivity().packageManager) != null){
+                    startActivity(intent)
+                }
+                Toast.makeText(activity, "set $hour : $minutes", Toast.LENGTH_SHORT).show()
+            }
+        })
         binding.alarmList.adapter = adapter
 
 

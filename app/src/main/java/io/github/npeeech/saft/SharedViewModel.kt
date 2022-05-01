@@ -40,4 +40,12 @@ class SharedViewModel(receiveText: String) : ViewModel() {
             LocalTime.parse(it.value)
         }.toSet().toList().sorted()
     }
+
+    fun calcAlarm(alarmTime: LocalTime): LocalTime {
+        return alarmTime.plusMinutes(deltaTimeList[deltaTimePosition.value ?: 0].toLong())
+    }
+    fun calcAlarm(position: Int): LocalTime{
+        val alarmTime = alarmList.value?.get(position)!!
+        return calcAlarm(alarmTime)
+    }
 }
