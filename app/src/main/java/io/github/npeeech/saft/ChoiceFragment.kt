@@ -47,22 +47,22 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.deltaTimePosition.value = sharedPref?.getInt(getString(R.string.alarmOffsetKey), alarmOffsetDefaultValue)
 
 
-        val adapter = AlarmListAdapter(object : ClickButtonListener{
-            override fun onClick(position: Int) {
-                val hour = viewModel.calcAlarm(position).hour.toInt()
-                val minutes = viewModel.calcAlarm(position).minute.toInt()
-                val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
-                    putExtra(AlarmClock.EXTRA_HOUR, hour)
-                    putExtra(AlarmClock.EXTRA_MINUTES, minutes)
-                    putExtra(AlarmClock.EXTRA_SKIP_UI, true)
-                }
-                if (intent.resolveActivity(requireActivity().packageManager) != null){
-                    startActivity(intent)
-                }
-                Toast.makeText(activity, "set $hour : $minutes", Toast.LENGTH_SHORT).show()
-            }
-        })
-        binding.alarmList.adapter = adapter
+//        val adapter = AlarmListAdapter(object : ClickButtonListener{
+//            override fun onClick(position: Int) {
+//                val hour = viewModel.calcAlarm(position).hour.toInt()
+//                val minutes = viewModel.calcAlarm(position).minute.toInt()
+//                val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+//                    putExtra(AlarmClock.EXTRA_HOUR, hour)
+//                    putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+//                    putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+//                }
+//                if (intent.resolveActivity(requireActivity().packageManager) != null){
+//                    startActivity(intent)
+//                }
+//                Toast.makeText(activity, "set $hour : $minutes", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//        binding.alarmList.adapter = adapter
 
 
         val spinner: Spinner = binding.alarmOffsetSpinner
@@ -80,10 +80,10 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         viewModel.deltaTimePosition.observe(viewLifecycleOwner, androidx.lifecycle.Observer { position ->
             viewModel.alarmList.value?.let {
-                adapter.setList(it.map { time ->
-                    val deltaTime = viewModel.deltaTimeList[position]
-                    time.plusMinutes(deltaTime.toLong())
-                })
+//                adapter.setList(it.map { time ->
+//                    val deltaTime = viewModel.deltaTimeList[position]
+//                    time.plusMinutes(deltaTime.toLong())
+//                })
             }
             Log.i("observe", "viewModel.alarmOffsetTimeが変更された")
         })
