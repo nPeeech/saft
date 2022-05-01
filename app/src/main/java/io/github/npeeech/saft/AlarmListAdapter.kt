@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalTime
 
-class AlarmListAdapter(private val dataSet: List<LocalTime>) : RecyclerView.Adapter<AlarmListAdapter.ViewHolder>() {
+class AlarmListAdapter(private var dataSet: List<LocalTime>) : RecyclerView.Adapter<AlarmListAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -20,6 +20,11 @@ class AlarmListAdapter(private val dataSet: List<LocalTime>) : RecyclerView.Adap
             // Define click listener for the ViewHolder's View.
             textView = view.findViewById(R.id.alarmTimeText)
         }
+    }
+
+    fun setList(dataSet: List<LocalTime>){
+        this.dataSet = dataSet
+        notifyDataSetChanged()
     }
 
     // Create new views (invoked by the layout manager)

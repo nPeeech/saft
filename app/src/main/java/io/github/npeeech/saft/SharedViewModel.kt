@@ -14,7 +14,7 @@ class SharedViewModel(receiveText: String) : ViewModel() {
     val eventParse: LiveData<Boolean>
         get() = _eventParse
 
-    val alarmOffsetTime = MutableLiveData<Long>()
+    val alarmOffsetTime = MutableLiveData<Int>()
 
     var alarmList = MutableLiveData<List<LocalTime>>()
 
@@ -22,11 +22,12 @@ class SharedViewModel(receiveText: String) : ViewModel() {
         alarmlist.stream().map { alarm ->
             alarmOffsetTime.value?.let {
                 alarm.plusMinutes(
-                    it
+                    it.toLong()
                 )
             }
         }.collect(Collectors.toList())
     }
+    var alarmOffsetTimeList: List<Int> = listOf()
 
 
     init {
@@ -48,4 +49,5 @@ class SharedViewModel(receiveText: String) : ViewModel() {
             LocalTime.parse(it.value)
         }.toSet().toList().sorted()
     }
+
 }
