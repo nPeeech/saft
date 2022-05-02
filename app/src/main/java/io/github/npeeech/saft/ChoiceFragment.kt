@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.AlarmClock
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import io.github.npeeech.saft.databinding.FragmentChoiceBinding
 import java.time.LocalTime
 
@@ -40,6 +42,7 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
         )
         binding.sharedViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.richTextView.movementMethod = LinkMovementMethod.getInstance()
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val alarmOffsetDefaultValue = resources.getInteger(R.integer.alarmOffsetDefaultValue)
@@ -87,6 +90,26 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
             Log.i("observe", "viewModel.alarmOffsetTimeが変更された")
         })
+
+        viewModel.setAlarmPosition.observe(viewLifecycleOwner, Observer { position ->
+            Log.i("observe","setAlarmPositionが変更された")
+            if (position != -1){
+                val alarmTime = viewModel.calcAlarm(position)
+                val hour = alarmTime.hour.toInt()
+                val minutes = alarmTime.minute.toInt()
+                val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+                    putExtra(AlarmClock.EXTRA_HOUR, hour)
+                    putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+                    putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+                }
+                if (intent.resolveActivity(requireActivity().packageManager) != null){
+                    startActivity(intent)
+                }
+                Toast.makeText(activity, "${resources.getString(R.string.set_alarm_complete_message)} ${alarmTime.toString()}", Toast.LENGTH_SHORT).show()
+                viewModel.onSetAlarmPositionComplete()
+            }
+        })
+
 
 
         return binding.root

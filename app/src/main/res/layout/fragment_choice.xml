@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@+id/alarm_offset_spinner">
 
             <TextView
-                android:id="@+id/inputPlainTextView"
+                android:id="@+id/richTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/inputPlainTextHint"

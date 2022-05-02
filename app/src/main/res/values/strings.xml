@@ -7,4 +7,5 @@
     <string name="setButtonText">アラームをセットする</string>
     <string name="empty_input_text_message">テキストを入力してください</string>
     <string name="alarmOffsetKey">alarm_offset_key</string>
+    <string name="set_alarm_complete_message">アラームをセットしました：</string>
 </resources>
