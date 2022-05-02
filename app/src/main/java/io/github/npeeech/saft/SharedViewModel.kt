@@ -34,7 +34,7 @@ class SharedViewModel(receiveText: String) : ViewModel() {
     }
 
     fun parse() {
-        val regex = Regex("""[0-2]?[0-9][:時][0-6][0-9][分]?""")
+        val regex = Regex("""[0-2]?[0-9][:][0-6][0-9]""")
 
         alarmList.value = regex.findAll(plainText.value ?: "").map {
             LocalTime.parse(it.value)
