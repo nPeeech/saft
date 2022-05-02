@@ -1,7 +1,9 @@
 package io.github.npeeech.saft
 
+import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
@@ -51,6 +53,11 @@ class SharedViewModel(receiveText: String) : ViewModel() {
                         Log.i("observe", "クリックされた")
 
                         _setAlarmPosition.value = it.index
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        ds.color = Color.BLUE
                     }
                 },
                 it.value.range.start,
