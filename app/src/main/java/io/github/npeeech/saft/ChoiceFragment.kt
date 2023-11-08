@@ -26,7 +26,7 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
             inflater,
@@ -78,19 +78,22 @@ class ChoiceFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     putExtra(AlarmClock.EXTRA_SKIP_UI, true)
                 }
                 if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    Toast.makeText(
+                        activity,
+                        "${resources.getString(R.string.set_alarm_complete_message)} $alarmTime",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        activity,
+                        R.string.set_alarm_failed_message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                Toast.makeText(
-                    activity,
-                    "${resources.getString(R.string.set_alarm_complete_message)} $alarmTime",
-                    Toast.LENGTH_SHORT
-                ).show()
                 viewModel.onSetAlarmPositionComplete()
             }
         }
-
-
-
         return binding.root
     }
 
